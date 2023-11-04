@@ -1,15 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>{% block title %}{% endblock %} | ShopMe NI</title>
-</head>
-<body>
+    <title>
+      {% block title %}
+
+      {% endblock %}| ShopMe NI
+    </title>
+  </head>
+  <body>
+    <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
+      <a href="/" class="text-xl font-semibold">ShopMe NI</a>
+
+      <div class="space-x-4">
+        <a href="#" class="text-lg font-semibold hover:text-gray-500">Nuevo producto</a>
+        <a href="#" class="text-lg font-semibold hover:text-gray-500">Catálogo</a>
+        <a href="#" class="px-3 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Registrarse</a>
+        <a href="#" class="px-3 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Identificarse</a>
+      </div>
+    </nav>
+
     <div class="px-6 py-6">
-        {% block content %}
-        {% endblock %}
+      {% block content %}
+
+      {% endblock %}
     </div>
-</body>
+
+    <footer class="py-6 px-6 flex justify-between bg-gray-800">
+        <div class="w-2/3 pr-10">
+            <h3 class="mb-5 font-semibold text-gray-400">Acerca de ShopMe NI</h3>
+
+            <p class="text-lg text-gray-500">ShopMe NI es una plataforma para que los negocios locales puedan ofrecer sus productos de manera más organizada.</p>
+        </div>
+
+        <div class="w-1/3">
+            <h3 class="mb-5 font-semibold text-gray-400">Menú</h3>
+
+            <ul class="space-y-2">
+                <li><a href="{% url 'contacto' %}" class="text-lg text-teal-500 hover:text-teal-700">Contacto</a></li>
+                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Política de Privacidad</a></li>
+                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Términos de uso</a></li>
+            </ul>
+        </div>
+    </footer>
+  </body>
 </html>
