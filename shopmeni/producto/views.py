@@ -1,8 +1,32 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .forms import FormularioNuevoProducto
-from .models import Producto
+from .models import Producto, Categoria
+
+def productos(request):
+    query = request.GET.get("query", "")
+    categoria_id = request.GET.get("categoria", 0)
+
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.filter(is_sold=False)
+
+    # Filtros
+    if query:
+        productos = productos.filter(Q(name__icontains=query) | Q(description__icontains=query))
+
+    if categoria_id:
+        productos = productos.filter(categoria_id=categoria_id)
+    
+    context = {
+        "productos": productos,
+        "query": query,
+        "categorias": categorias,
+        "categoria_id": int(categoria_id),
+    }
+
+    return render(request, "producto/productos.html", context)
 
 def detalles(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
@@ -34,3 +58,30 @@ def nuevo(request):
     }
 
     return render(request, "producto/formulario.html", context)
+
+@login_required
+def editar(request, pk):
+    producto = get_object_or_404(Producto, pk=pk, created_by=request.user)
+
+    if request.method == "POST":
+        form = FormularioNuevoProducto(request.POST, request.FILES, instance=producto)
+
+        if form.is_valid():
+            producto.save()
+
+            return redirect("producto:detalles", pk=producto.id) # type: ignore
+        
+    form = FormularioNuevoProducto(instance=producto)
+    context = {
+        "form": form,
+        "titulo": "Editar producto"
+    }
+
+    return render(request, "producto/formulario.html", context)
+
+@login_required
+def eliminar(request, pk):
+    producto = get_object_or_404(Producto, pk=pk, created_by=request.user)
+    producto.delete()
+
+    return redirect("panel:index")

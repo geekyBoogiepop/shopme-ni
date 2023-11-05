@@ -19,11 +19,19 @@
         <strong>Vendedor:</strong> {{ producto.created_by.username }}
       </p>
 
-      {% if producto.descripcion %}
+      {% if producto.description %}
         <p class="text-gray-700">
           <strong class="text-gray-500">Descripción:</strong><br />
           {{ producto.description }}
         </p>
+      {% endif %}
+
+      {% if request.user == producto.created_by %}
+      <div class="mt-6 p-6 bg-white rounded-xl">
+        <p>Este producto es tuyo.</p>
+        <a href="{% url 'producto:editar' producto.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Editar</a>
+        <a href="{% url 'producto:eliminar' producto.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Eliminar</a>
+      </div>
       {% endif %}
 
       <a href="#" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contactar vendedor</a>
