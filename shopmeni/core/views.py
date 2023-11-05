@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 from producto.models import Categoria, Producto
 from .forms import FormularioRegistro
@@ -32,3 +34,8 @@ def registrar_usuario(request):
     }
 
     return render(request, "core/registro.html", context)
+
+@login_required
+def cerrar_sesion(request):
+    logout(request)
+    return redirect("core:index")

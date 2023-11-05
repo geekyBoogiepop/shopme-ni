@@ -14,4 +14,5 @@ urlpatterns = [
     path("contact/", views.contacto, name="contacto"),
     path("registrarse/", views.registrar_usuario, name="registrarse"),
     path("login/", auth_views.LoginView.as_view(template_name="core/login.html", authentication_form=FormularioLogin), name="login"),
+    path("logout/", views.cerrar_sesion, name="logout"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
