@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from producto.models import Categoria, Producto
+from .forms import FormularioRegistro
 
 def index(request):
     productos = Producto.objects.filter(is_sold=False)[:6]
@@ -15,3 +16,19 @@ def index(request):
 
 def contacto(request):
     return render(request, "core/contact.html")
+
+def registrar_usuario(request):
+    if request.method == "POST":
+        form = FormularioRegistro(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect("/login/")
+        
+    form = FormularioRegistro()
+    context = {
+        "form": form
+    }
+
+    return render(request, "core/registro.html", context)
