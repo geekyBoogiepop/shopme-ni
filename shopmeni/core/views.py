@@ -24,8 +24,8 @@ def registrar_usuario(request):
         if form.is_valid():
             form.save()
 
-            return redirect("/login/")
-        
+            return redirect("core:login")
+    
     form = FormularioRegistro()
     context = {
         "form": form
