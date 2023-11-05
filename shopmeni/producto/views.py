@@ -36,6 +36,26 @@ def nuevo(request):
     return render(request, "producto/formulario.html", context)
 
 @login_required
+def editar(request, pk):
+    producto = get_object_or_404(Producto, pk=pk, created_by=request.user)
+
+    if request.method == "POST":
+        form = FormularioNuevoProducto(request.POST, request.FILES, instance=producto)
+
+        if form.is_valid():
+            producto.save()
+
+            return redirect("producto:detalles", pk=producto.id) # type: ignore
+        
+    form = FormularioNuevoProducto(instance=producto)
+    context = {
+        "form": form,
+        "titulo": "Editar producto"
+    }
+
+    return render(request, "producto/formulario.html", context)
+
+@login_required
 def eliminar(request, pk):
     producto = get_object_or_404(Producto, pk=pk, created_by=request.user)
     producto.delete()
