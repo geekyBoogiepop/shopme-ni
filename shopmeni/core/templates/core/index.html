@@ -4,5 +4,41 @@ Bienvenido
 {% endblock %}
 
 {% block content %}
-<h1>Página principal</h1>
+  <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Nuevos productos</h2>
+
+    <div class="grid grid-cols-3 gap-3">
+      {% for producto in productos %}
+      <div>
+        <a href="{% url 'producto:detalles' producto.id %}">
+          <div>
+            <img src="{{ producto.image.url }}" alt="{{ producto.name }}" class="rounded-t-xl h-96 w-96">
+          </div>
+
+          <div class="p-6 bg-white rounded-b-xl w-96">
+            <h2 class="text-2xl">{{ producto.name }}</h2>
+            <p class="text-gray-500">Precio: C$ {{ producto.price }}</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Categorías</h2>
+
+    <div class="grid grid-cols-3 gap-3">
+      {% for categoria in categorias %}
+      <div>
+        <a href="#">
+          <div class="p-6 bg-white rounded-b-xl">
+            <h2 class="text-2xl">{{ categoria.name }}</h2>
+            <p class="text-gray-500">{{ categoria.productos.count }} producto{{ categoria.productos.count|pluralize }}</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
