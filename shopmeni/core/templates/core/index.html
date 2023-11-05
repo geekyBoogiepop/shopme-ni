@@ -12,10 +12,10 @@ Bienvenido
       <div>
         <a href="{% url 'producto:detalles' producto.id %}">
           <div>
-            <img src="{{ producto.image.url }}" alt="{{ producto.name }}" class="rounded-t-xl">
+            <img src="{{ producto.image.url }}" alt="{{ producto.name }}" class="rounded-t-xl h-96 w-96">
           </div>
 
-          <div class="p-6 bg-white rounded-b-xl">
+          <div class="p-6 bg-white rounded-b-xl w-96">
             <h2 class="text-2xl">{{ producto.name }}</h2>
             <p class="text-gray-500">Precio: C$ {{ producto.price }}</p>
           </div>
