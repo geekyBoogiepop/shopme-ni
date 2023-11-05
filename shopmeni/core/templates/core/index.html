@@ -10,7 +10,7 @@ Bienvenido
     <div class="grid grid-cols-3 gap-3">
       {% for producto in productos %}
       <div>
-        <a href="#">
+        <a href="{% url 'producto:detalles' producto.id %}">
           <div>
             <img src="{{ producto.image.url }}" alt="{{ producto.name }}" class="rounded-t-xl">
           </div>
