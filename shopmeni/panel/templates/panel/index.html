@@ -4,8 +4,11 @@ Panel
 {% endblock %}
 
 {% block content %}
-  <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+  <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl min-h-[28rem]">
     <h2 class="mb-12 text-2xl text-center">Mis productos</h2>
+    {% if not productos %}
+    <p class="text-xl font-semibold text-center">Todavía no está vendiendo productos.</p>
+    {% endif %}
 
     <div class="grid grid-cols-3 gap-3">
       {% for producto in productos %}

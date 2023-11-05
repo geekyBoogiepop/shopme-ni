@@ -34,3 +34,10 @@ def nuevo(request):
     }
 
     return render(request, "producto/formulario.html", context)
+
+@login_required
+def eliminar(request, pk):
+    producto = get_object_or_404(Producto, pk=pk, created_by=request.user)
+    producto.delete()
+
+    return redirect("panel:index")

@@ -7,4 +7,5 @@ app_name = "producto"
 urlpatterns = [
     path("new/", views.nuevo, name="nuevo"),
     path("<int:pk>/", views.detalles, name="detalles"),
+    path("eliminar/<int:pk>", views.eliminar, name="eliminar"),
 ]
