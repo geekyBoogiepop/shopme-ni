@@ -7,6 +7,10 @@ class FormularioMensajesConversacion(forms.ModelForm):
         model = MensajesConversacion
         fields = ("contenido",)
 
+        labels = {
+            "contenido": "Mensaje"
+        }
+        
         widgets = {
             "contenido": forms.Textarea(attrs={
                 "class": "w-full py-4 px-6 rounded-xl border"

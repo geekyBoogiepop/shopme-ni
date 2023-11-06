@@ -9,7 +9,7 @@ Mensajes
 
 <div class="space-y-6 min-h-[28rem]">
     {% for conversacion in conversaciones %}
-        <a href="#">
+        <a href="{% url 'mensajes:detalles' conversacion.id %}">
             <div class="p-6 flex bg-gray-100 rounded-xl">
                 <div class="pr-6">
                     <img src="{{ conversacion.producto.image.url }}" alt="{{ conversacion.producto.name }}" class="w-20 rounded-xl">

@@ -18,7 +18,7 @@ def nueva_conversacion(request, producto_pk):
 
     # Si hay conversaciones, redirije al usuario a esa conversación existente
     if conversaciones:
-        pass
+        return redirect("mensajes:detalles", pk=conversaciones.first().id) # type: ignore
 
     # Si el usuario envía un nuevo mensaje
     if request.method == "POST":
@@ -59,3 +59,28 @@ def conversaciones(request):
 
     return render(request, "mensajes/conversaciones.html", context)
 
+def detalles(request, pk):
+    conversacion = Conversacion.objects.filter(miembros__in=[request.user.id]).get(pk=pk)
+
+    if request.method == "POST":
+        form = FormularioMensajesConversacion(request.POST)
+
+        if form.is_valid():
+            mensaje_conversacion = form.save(commit=False)
+            mensaje_conversacion.conversacion = conversacion
+            mensaje_conversacion.created_by = request.user
+            mensaje_conversacion.save()
+
+            # Actualiza fecha y hora de la última actividad de la conversación
+            conversacion.save()
+
+            return redirect("mensajes:detalles", pk=pk)
+    else:
+        form = FormularioMensajesConversacion()
+
+    context = {
+        "conversacion": conversacion,
+        "form": form
+    }
+
+    return render(request, "mensajes/detalles.html", context)
