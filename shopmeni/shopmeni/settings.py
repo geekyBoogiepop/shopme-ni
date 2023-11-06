@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'producto',
-    "panel"
+    "panel",
+    "mensajes"
 ]
 
 MIDDLEWARE = [
