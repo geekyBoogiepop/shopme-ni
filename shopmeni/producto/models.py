@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -23,3 +25,18 @@ class Producto(models.Model):
 
     def __str__(self) -> str:
         return f"Producto: {self.name} Categoría: {self.categoria.name}"
+    
+    def save(self, *args, **kwargs):
+        try:
+            producto_anterior = Producto.objects.get(pk=self.pk)
+            imagen_vieja = producto_anterior.image
+        except Producto.DoesNotExist:
+            imagen_vieja = None
+
+        if self.image and imagen_vieja and self.image.path != imagen_vieja.path:
+            print("hola")
+            ruta_imagen_vieja = os.path.join(settings.MEDIA_ROOT, imagen_vieja.name)
+            if os.path.exists(ruta_imagen_vieja):
+                os.remove(ruta_imagen_vieja)
+
+        super(Producto, self).save(*args, **kwargs)
