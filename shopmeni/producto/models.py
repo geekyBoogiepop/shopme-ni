@@ -34,9 +34,16 @@ class Producto(models.Model):
             imagen_vieja = None
 
         if self.image and imagen_vieja and self.image.path != imagen_vieja.path:
-            print("hola")
             ruta_imagen_vieja = os.path.join(settings.MEDIA_ROOT, imagen_vieja.name)
             if os.path.exists(ruta_imagen_vieja):
                 os.remove(ruta_imagen_vieja)
 
         super(Producto, self).save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        if self.image:
+            ruta_imagen = os.path.join(settings.MEDIA_ROOT, self.image.name)
+            if os.path.exists(ruta_imagen):
+                os.remove(ruta_imagen)
+
+        super(Producto, self).delete(*args, **kwargs)
