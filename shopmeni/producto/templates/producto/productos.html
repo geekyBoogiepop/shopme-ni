@@ -36,7 +36,10 @@
         </ul>
     </div>
 
-    <div class="col-span-3">
+    <div class="col-span-3 flex flex-col items-center justify-center">
+      {% if not productos %}
+      <h3 class="font-semibold text-2xl text-center">Todavía no hay productos en esta categoría</h3>
+      {% endif %}
       <div class="grid grid-cols-3 gap-4">
         {% for producto in productos %}
           <div>
